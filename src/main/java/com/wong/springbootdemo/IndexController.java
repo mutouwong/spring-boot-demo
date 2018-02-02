@@ -25,20 +25,13 @@ public class IndexController {
     @Autowired
     private InfoBean infoBean;
 
-
     @RequestMapping(value = "/")
     String index(){
         return "Hello Spring Boot!" ;
     }
 
-    /*@RequestMapping(value = "/info")
-    String info(){
-        return "Name : " + name + " ; age : " + age ;
-    }*/
-
     @RequestMapping(value = "/info/bean")
     String info1() {
-        
         return JSON.toJSONString(infoBean);
     }
 
