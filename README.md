@@ -186,3 +186,41 @@ public class SpringBootDemoApplication {
 }
 ```
 * 在相应的Service方法上面加入注解`@Transactional`
+
+## Spring-boot 日志
+* 可使用Spring-boot自带的日志来记录日志
+参考地址：https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-logging.html
+* 使用Logback的指定配置文件来实现日志的记录
+在resource目录下面新增logback.xml文件，根据需求加入相应的配置即可
+因为在Spring-boot中引入了spring-boot-starter，其中包含了spring-boot-starter-loggin，该依赖内容就是SpringBoot默认的日志框架Logback,因此我们直接可以使用，不需要再次引入相关依赖。
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="30 seconds">
+    <appender name="ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <prudent>true</prudent>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>./logs/log-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxHistory>10</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy	class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>10MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%date %level [%thread] %logger.%class{0}#%method[%file:%line] %msg%n</pattern>
+        </encoder>
+    </appender>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%date %level [%thread] %logger#%method[%file:%line] %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="ROLLING" />
+    </root>
+
+    <logger name="com.wong.springbootdemo" level="INFO" />
+
+</configuration>
+```

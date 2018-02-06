@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSON;
 import com.wong.springbootdemo.dto.InfoBean;
 import com.wong.springbootdemo.model.SysRole;
 import com.wong.springbootdemo.service.SysRoleService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @EnableAutoConfiguration()
 public class IndexController {
+
+    private static final Logger logger = LoggerFactory.getLogger(IndexController.class);
 
     /*@Value("${wong.name}")
     private String name;
@@ -53,6 +57,8 @@ public class IndexController {
 
     @RequestMapping(value = "/info/bean")
     String info1() {
+        logger.info("访问/info/bean,输出为[{}]",JSON.toJSONString(infoBean));
+
         return JSON.toJSONString(infoBean);
     }
 
