@@ -123,3 +123,66 @@ public class InfoBean {
     }
 }
 ```
+
+## Spring-boot 集成Mybatis
+* 在pom文件中引入相关依赖
+```xml
+    <!-- 添加 MyBatis -->
+    <dependency>
+        <groupId>org.mybatis.spring.boot</groupId>
+        <artifactId>mybatis-spring-boot-starter</artifactId>
+        <version>1.3.1</version>
+    </dependency>
+    
+    <!-- Mysql -->
+    <dependency>
+        <groupId>mysql</groupId>
+        <artifactId>mysql-connector-java</artifactId>
+        <version>6.0.6</version>
+    </dependency>
+		
+```
+* 在`application.properties`配置文件中加如数据库相关配置，如下：
+```properties
+### 数据库配置 ###
+spring.datasource.url=jdbc:mysql://XXX:3306/db_permission_wg?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+spring.datasource.username=root
+spring.datasource.password=123456
+spring.datasource.driver-class-name=com.mysql.jdbc.Driver
+```
+* 在dao中使用Mybatis注解对数据库进行操作，如下：
+```java
+@Mapper
+public interface SysRoleMapper {
+
+    /**
+     * 查询
+     * @return
+     */
+    @Select("select id,name,description from sys_role_wg")
+    List<SysRole> selectAll();
+
+    /**
+     * 新增
+     * @param role
+     */
+    @Insert("insert into sys_role_wg (name,seq,isdefault) values(#{name},#{seq},#{isdefault})")
+    void addSysRole(SysRole role);
+
+}
+```
+
+## Spring-boot 事务控制
+* 在启动类上面新加注解`@EnableTransactionManagement`
+如下：
+```java
+@EnableTransactionManagement // 启注解事务管理，等同于xml配置方式的 <tx:annotation-driven />
+@SpringBootApplication
+public class SpringBootDemoApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(SpringBootDemoApplication.class, args);
+	}
+}
+```
+* 在相应的Service方法上面加入注解`@Transactional`
