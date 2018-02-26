@@ -2,12 +2,16 @@ package com.wong.springbootdemo.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.wong.springbootdemo.dto.InfoBean;
+import com.wong.springbootdemo.dto.Message;
+import com.wong.springbootdemo.dto.MessageStatusEnum;
+import com.wong.springbootdemo.dto.MessageUtil;
 import com.wong.springbootdemo.model.SysRole;
 import com.wong.springbootdemo.service.SysRoleService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,12 +25,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class IndexController {
 
     private static final Logger logger = LoggerFactory.getLogger(IndexController.class);
-
-    /*@Value("${wong.name}")
-    private String name;
-
-    @Value("${wong.age}")
-    private Integer age;*/
 
     @Autowired
     private InfoBean infoBean;
@@ -60,6 +58,13 @@ public class IndexController {
         logger.info("访问/info/bean,输出为[{}]",JSON.toJSONString(infoBean));
 
         return JSON.toJSONString(infoBean);
+    }
+
+    @GetMapping(value = "/test/exception")
+    public Message testException() throws Exception {
+        Message message = MessageUtil.createEmptyMessage();
+        MessageUtil.UpdateMessageStatus(message, MessageStatusEnum.SUCCESS);
+        return message;
     }
 
 }

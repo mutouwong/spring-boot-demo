@@ -1,5 +1,6 @@
 package com.wong.springbootdemo.service;
 
+import com.wong.springbootdemo.exception.BusiException;
 import com.wong.springbootdemo.model.SysRole;
 import com.wong.springbootdemo.dao.SysRoleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,14 @@ public class SysRoleService {
     @Transactional
     public void addSysRole(SysRole role) throws Exception {
         mapper.addSysRole(role);
-        int i = 1 / 0;
+    }
+
+    /**
+     * 测试自定义异常
+     * @throws Exception
+     */
+    public void testException() throws Exception {
+        throw new BusiException("111","自定义异常");
     }
 
 }

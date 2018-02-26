@@ -5,7 +5,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 /**
- * @Description: TODO
+ * @Description: 配置文件对应实体
  * @Author: gang.wang
  * @Date: Created in 上午11:30 2018/1/23
  */
